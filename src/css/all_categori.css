@@ -1,0 +1,96 @@
+#categories{
+    
+ overflow: scroll;
+}
+
+
+
+#categories  button{
+    height: 100%;
+    width: 100%;
+    background: none;
+    border: none;
+    color: rgba(5, 5, 5, 0.3);
+    text-align: left;
+    display: block;
+}
+
+
+
+
+#categories .active{
+    color:var(--btn-color);
+}
+.categorBt{
+    padding:14px 28px;
+    border-radius: 15px;
+    background: none;
+    border-color: rgba(5, 5, 5, 0.2);
+    color: rgba(5, 5, 5, 0.5);
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 500;
+
+    
+}
+.categorBt:hover{
+background-color: var(--btn-color);
+color: var(--secondary-color);
+}
+@media screen  and (max-width:768px){
+    #categories{
+        width: 100%;
+     height: 198px;
+     
+    }
+    #categories  button{
+        font-size: 14px;
+        line-height:calc(18/14);
+        font-family: var(--basic-font-family);
+        font-weight: 500;
+    }
+    #categories li{
+        padding-bottom: 16px;
+        height: 36px;
+    }    
+    .categorBt{
+        margin-bottom: 24px;
+    }
+}
+
+@media screen  and (min-width:768px){
+    #categories{
+        width: 176px;
+     height: 416px;
+     
+    }
+    #categories  button{
+        font-size: 16px;
+        line-height:1.25;
+        font-family: var(--basic-font-family);
+        font-weight: 500;
+    
+    }
+    #categories li{
+        padding-bottom: 24px;
+        height: 44px;
+    }    
+    .categorBt{
+        margin-bottom: 30px;
+        margin-top: 26px;
+    }
+}
+@media screen  and (min-width:1280px){
+    #categories{
+        width: 235px;
+    
+     
+    }
+    #categories  button{
+        font-size: 16px;
+    }
+    
+    .categorBt{
+        margin-bottom: 42px;
+    }
+}
