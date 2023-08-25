@@ -5,15 +5,14 @@
 
 .recipe-container {
   width: 100%;
-  padding: 0 16px;
   margin: 0 auto;
 }
 
 .recipes-list-item {
   position: relative;
-  width: 100%;
-  height: 100%;
-  margin-bottom: 24px;
+  width: 335px;
+  height: 335px;
+  margin-bottom: 40px;
 }
 
 .recipe-card > img {
@@ -39,8 +38,7 @@
   position: absolute;
   top: 240px;
   left: 16px;
-
-  width: 100%;
+  width: 303px;
   height: 32px;
   overflow: hidden;
   white-space: nowrap;
@@ -139,8 +137,8 @@
 
 .favorite-icon {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 16px;
+  right: 16px;
   width: 22px;
   height: 22px;
   stroke: #f8f8f8;
@@ -170,8 +168,8 @@
 }
 
 .pageBtn {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid rgba(5, 5, 5, 0.5);
   color: var(--main-color);
@@ -184,23 +182,6 @@
 
 .current-page {
   background-color: var(--btn-color);
-}
-
-@media screen and (min-width: 375px) {
-  .recipes-list-item {
-    width: 335px;
-    height: 335px;
-  }
-
-  .recipe-card-description {
-    width: 303px;
-    height: 32px;
-  }
-
-  .pageBtn {
-    width: 40px;
-    height: 40px;
-  }
 }
 
 @media screen and (min-width: 768px) {
@@ -229,6 +210,7 @@
   .recipes-list-item img {
     width: 240px;
     height: 264px;
+    background-size: cover;
   }
 
   .recipe-card-title {
@@ -263,6 +245,11 @@
 
   .pagination-pages {
     margin-top: 64px;
+  }
+
+  .pageBtn {
+    width: 44px;
+    height: 44px;
   }
 }
 

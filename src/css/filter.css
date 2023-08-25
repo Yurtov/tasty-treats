@@ -7,15 +7,18 @@
 .filter-form-label {
   color: rgba(5, 5, 5, 0.5);
   font-family: 'Inter';
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 1.16;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .search-area {
+  width: 335px;
   display: flex;
-  margin-top: 8px;
   padding-top: 14px;
   padding-bottom: 14px;
   padding-left: 18px;
@@ -35,6 +38,7 @@
   line-height: 1.28;
   border: none;
   margin-left: 30px;
+  width: 335px;
 }
 
 .search-icon {
@@ -55,7 +59,6 @@
 .select {
   width: 100%;
   padding: 14px 18px;
-  margin-top: 8px;
   border-radius: 15px;
   border: 1px solid rgba(5, 5, 5, 0.2);
   background-color: inherit;
@@ -66,15 +69,18 @@
   color: rgba(5, 5, 5, 0.3);
 }
 
+.select.time {
+  width: 160px;
+}
+
+.select.area {
+  width: 161px;
+}
+
 .select.ingredients {
   display: block;
   width: 188px;
   height: 46px;
-}
-
-.label-flex {
-  display: flex;
-  gap: 14px;
 }
 
 label {
@@ -102,29 +108,39 @@ option {
   font-size: 12px;
   line-height: calc(1.33);
   color: rgba(5, 5, 5, 0.5);
+  padding: 0;
 }
+
 .rst-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
-  margin-left: 230px;
+  justify-content: end;
+  gap: 2px;
+  margin-left: auto;
+  margin-bottom: 20px;
 }
+
 .rst-btn-svg {
   width: 16px;
   height: 16px;
-  stroke: rgba(5, 5, 5, 0.5);
-}
-
-@media screen and (min-width: 375px) {
-  /* .search-input {
-    
-  } */
+  stroke: var(--btn-color);
 }
 
 @media screen and (min-width: 768px) {
   .search-area {
     width: 278px;
+  }
+
+  .select.time {
+    width: 125px;
+  }
+
+  .select.area {
+    width: 141px;
+  }
+
+  .select.ingredients {
+    width: 188px;
   }
 
   .filter-form-list {
@@ -133,15 +149,13 @@ option {
     flex-wrap: wrap;
   }
 
-  .label-flex {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
   .rst-btn {
     margin-left: 184px;
     margin-top: 14px;
+    margin-bottom: 14px;
+  }
+
+  .rst-btn {
     margin-bottom: 14px;
   }
 }
@@ -167,9 +181,5 @@ option {
 
   .ingredients {
     width: 188px;
-  }
-
-  .rst-btn {
-    margin-left: 670px;
   }
 }

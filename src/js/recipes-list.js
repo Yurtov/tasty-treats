@@ -75,6 +75,8 @@ function changeNumberRecipe () {
         reloadRecipesList();
         NUMB_PAGE_IN_MENU = 3;
     }
+
+   
     
     updatePagesNumber(null);
 }
@@ -174,6 +176,7 @@ function createNumberPage(data, startPage) {
   pageNumber.innerHTML = '';
 
   let listMarkup = '';
+  console.log(listMarkup);
 
   if (currentPage > NUMB_PAGE_IN_MENU) {
     listMarkup += `
