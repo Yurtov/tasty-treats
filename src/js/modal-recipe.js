@@ -1,6 +1,6 @@
 import { UnsplashAPI } from './api';
 import Notiflix from 'notiflix';
-import {data, addDataToLocalStorage} from './add_favorite_to-localstorage'
+import { data, addDataToLocalStorage } from './add_favorite_to-localstorage';
 
 const unsplashApi = new UnsplashAPI();
 const refs = {
@@ -13,7 +13,6 @@ const refs = {
   body: document.querySelector('body'),
   backdrop: document.querySelector('js-backdrop'),
 };
-
 
 refs.closeModalBtn.addEventListener('click', toggleModal);
 refs.modal.addEventListener('click', handleBackdropClick);
@@ -31,7 +30,7 @@ export async function heardleRecipeById(id) {
   toggleModal();
   // showLoader();
   window.addEventListener('keydown', handleEscKeyPress);
-  refs.addToFavoriteBtn.setAttribute('name', `${id}`)
+  refs.addToFavoriteBtn.setAttribute('name', `${id}`);
   try {
     unsplashApi.endpoint = `/recipes/${id}`;
     const { data } = await unsplashApi.fetchRecipes();
@@ -60,6 +59,8 @@ function markupMob(data) {
     })
     .join('');
 
+  const ratingActiveWidth = data.rating / 0.05;
+
   return `
         <iframe
         class="modal-recipe-video"
@@ -75,10 +76,16 @@ function markupMob(data) {
         picture-in-picture;
          web-share" allowfullscreen>
          </iframe>
-        <h1 class="modal-recipe-title">${data.title}</h1>
+        <h1 class="modal-recipe-title">innerHTML</h1>
         <div class="recipe-rating-time">
-          <p>${data.rating}</p>
-          <p>${data.time}</p>
+          <div class="recipe-rating"> 
+            <p class="rating-value">${data.rating}</p>
+            <div class="rating-body">
+              <div class="rating-active" style="width: ${ratingActiveWidth}%"></div>
+              <div class="recipe-rating-list"></div>
+            </div>
+          </div>
+          <p>${data.time} min</p>
         </div>
         <ul class="modal-recipe-ingredients">${ingredients}</ul>
         <ul class="modal-recipe-tags">${tags}</ul>
@@ -99,6 +106,8 @@ function markupTab(data) {
     })
     .join('');
 
+  const ratingActiveWidth = data.rating / 0.05;
+
   return `
         <h1 class="modal-recipe-title">${data.title}</h1>
         <iframe
@@ -118,9 +127,15 @@ function markupTab(data) {
         <div class="modal-recipe-tags-rating">
           <ul class="modal-recipe-tags">${tags}</ul>
           <div class="recipe-rating-time">
-            <p>${data.rating}</p>
-            <p>${data.time}</p>
-          </div>
+            <div class="recipe-rating"> 
+              <p class="rating-value">${data.rating}</p>
+              <div class="rating-body">
+                <div class="rating-active" style="width: ${ratingActiveWidth}%"></div>
+                <div class="recipe-rating-list"></div>
+              </div>
+            </div>
+            <p class="rating-value">${data.time} min</p>
+        </div>
         </div>
         <ul class="modal-recipe-ingredients">${ingredients}</ul>
         <p class="modal-recipe-text">${data.instructions}</p>

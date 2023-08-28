@@ -1,6 +1,6 @@
 import { UnsplashAPI } from './api';
 import Notiflix from 'notiflix';
-import throttle from 'lodash.throttle'
+import throttle from 'lodash.throttle';
 import svg from '../images/sprite.svg';
 import { heardleRecipeById } from './modal-recipe';
 
@@ -18,36 +18,57 @@ function openModalBtn(e) {
   }
 }
 
-
 //константы
 let NUMB_PAGE_IN_MENU = 3;
 
-function createRecipesCards (data) {
-    try {
-        recipesListEl.innerHTML = '';
-        for (const recipe of data.results) {
-            const markup = 
-              `<li class="recipes-list-item" id="${recipe._id}">
+function createRecipesCards(data) {
+  
+  try {
+    recipesListEl.innerHTML = '';
+    for (const recipe of data.results) {
+      // const markup = `<li class="recipes-list-item" id="${recipe._id}">
+      //           <svg class="favorite-icon">
+      //             <use id="iconUse" href="${svg}#icon-heart"></use>
+      //           </svg>
+      //         <div class="recipe-card">
+      //           <img src="${recipe.preview}" alt="${recipe.description}" loading="lazy" class="recipe-card-img"/>
+      //           <p class="recipe-card-title">${recipe.title}</p>
+      //           <p class="recipe-card-description">${recipe.description}</p>
+      //           <button type="button" class="recipe-card-button" name="${recipe._id}" data-modal-recipte-open>See recipe</button>
+      //         </div>
+      //       </li>`;
+      const ratingActiveWidth = recipe.rating / 0.05;
+      const markup = `
+            <li class="recipes-list-item" id="${recipe._id}" style="background-image: url('${recipe.preview}');">
+              <div class="recipe-card">
                 <svg class="favorite-icon">
                   <use id="iconUse" href="${svg}#icon-heart"></use>
                 </svg>
-              <div class="recipe-card">
-                <img src="${recipe.preview}" alt="${recipe.description}" loading="lazy" />
                 <p class="recipe-card-title">${recipe.title}</p>
                 <p class="recipe-card-description">${recipe.description}</p>
-                <button type="button" class="recipe-card-button" name="${recipe._id}" data-modal-recipte-open>See recipe</button>
+                <div class="recipe-card-rating-btn">
+                  <div class="recipe-card-rating"> 
+                    <p class="rating-card-value">${recipe.rating}</p>
+                    <div class="rating-card-body">
+                      <div class="rating-card-active" style="width: ${ratingActiveWidth}%"></div>
+                      <div class="recipe-card-rating-list"></div>
+                    </div>
+                  </div>
+                  <button type="button" class="recipe-card-button" name="${recipe._id}" data-modal-recipte-open>See recipe</button>
+                </div>
               </div>
-            </li>`;
-            recipesListEl.insertAdjacentHTML("beforeend", markup);
-          }
-    } catch (err) {
-        Notiflix.Notify.warning('Sorry, something went wrong. Please try later.');
+            </li>
+            `;
+      recipesListEl.insertAdjacentHTML('beforeend', markup);
     }
+  } catch (err) {
+    Notiflix.Notify.warning('Sorry, something went wrong. Please try later.');
+  }
 }
 
 let currentTotalPages = null;
 
-async function reloadRecipesList () {
+async function reloadRecipesList() {
   unsplashApi.endpoint = '/recipes';
   const { data } = await unsplashApi.fetchRecipes();
   currentTotalPages = data.totalPages;
@@ -60,25 +81,23 @@ reloadRecipesList();
 // Изменение отображения количества рецептов в зависимости от ширина вьюпорта
 window.addEventListener('resize', throttle(changeNumberRecipe, 1000));
 
-function changeNumberRecipe () {
-    let currentWidth = window.innerWidth;
-    if (currentWidth <= 767) {
-        NUMB_PAGE_IN_MENU = 2;
-        unsplashApi.itemsPerPage = 6;
-        reloadRecipesList();
-    } else if (currentWidth >= 768 && currentWidth < 1280) {
-        unsplashApi.itemsPerPage = 8;
-        reloadRecipesList();
-        NUMB_PAGE_IN_MENU = 3;
-    } else {
-        unsplashApi.itemsPerPage = 9;
-        reloadRecipesList();
-        NUMB_PAGE_IN_MENU = 3;
-    }
+function changeNumberRecipe() {
+  let currentWidth = window.innerWidth;
+  if (currentWidth <= 767) {
+    NUMB_PAGE_IN_MENU = 2;
+    unsplashApi.itemsPerPage = 6;
+    reloadRecipesList();
+  } else if (currentWidth >= 768 && currentWidth < 1280) {
+    unsplashApi.itemsPerPage = 8;
+    reloadRecipesList();
+    NUMB_PAGE_IN_MENU = 3;
+  } else {
+    unsplashApi.itemsPerPage = 9;
+    reloadRecipesList();
+    NUMB_PAGE_IN_MENU = 3;
+  }
 
-   
-    
-    updatePagesNumber(null);
+  updatePagesNumber(null);
 }
 
 const refs = {
@@ -91,7 +110,7 @@ async function nextPage() {
     return false;
   }
 
-  unsplashApi.currentPage ++;
+  unsplashApi.currentPage++;
   const data = await reloadRecipesList();
 
   updatePagesNumber(data);
@@ -105,7 +124,7 @@ async function prevPage() {
     return false;
   }
 
-  unsplashApi.currentPage --;
+  unsplashApi.currentPage--;
   const data = await reloadRecipesList();
 
   updatePagesNumber(data);
@@ -114,34 +133,36 @@ async function prevPage() {
 }
 
 function updatePagesNumber(data) {
-  const listLastPages = 
-    Array.from({ length: currentTotalPages || data.totalPages }, 
-      (k, v) => {
-        if (v % NUMB_PAGE_IN_MENU === 0) {
-          return v + NUMB_PAGE_IN_MENU;
-        }
-      }).filter(e => (e === 0 || e));
+  const listLastPages = Array.from(
+    { length: currentTotalPages || data.totalPages },
+    (k, v) => {
+      if (v % NUMB_PAGE_IN_MENU === 0) {
+        return v + NUMB_PAGE_IN_MENU;
+      }
+    }
+  ).filter(e => e === 0 || e);
 
   const lastPage = listLastPages.filter(
-    (n) => (unsplashApi.currentPage >= n - (NUMB_PAGE_IN_MENU - 1) && unsplashApi.currentPage <= n)
+    n =>
+      unsplashApi.currentPage >= n - (NUMB_PAGE_IN_MENU - 1) &&
+      unsplashApi.currentPage <= n
   );
-  
+
   if (lastPage.length === 0) {
     return false;
   }
-  
+
   createNumberPage(data, lastPage[0] - (NUMB_PAGE_IN_MENU - 1));
 }
 
 export { createRecipesCards, reloadRecipesList };
-
 
 const pageNumber = document.querySelector('.page-numbers');
 
 // Создание разметки кнопок
 let lastPageCurrentPagination = null;
 
-async function loadButtonList () {
+async function loadButtonList() {
   unsplashApi.endpoint = '/recipes';
   const { data } = await unsplashApi.fetchRecipes();
   createNumberPage(data);
@@ -154,20 +175,19 @@ function changePage(e) {
   const currentContent = e.target.textContent;
   if (currentContent !== '...') {
     unsplashApi.currentPage = Number(currentContent);
-    
-    updateSelectedPageNumber()
-    
+
+    updateSelectedPageNumber();
+
     reloadRecipesList();
   } else {
     const elTarget = e.target;
     if (elTarget.classList.contains('listNumbPrev')) {
       loadPrevNuberPage();
-    }
-    else if (elTarget.classList.contains('listNumbNext')) {
+    } else if (elTarget.classList.contains('listNumbNext')) {
       loadNextNumberPage();
     }
   }
-};
+}
 
 function createNumberPage(data, startPage) {
   const currentPage = startPage || Number(data.page);
@@ -181,18 +201,18 @@ function createNumberPage(data, startPage) {
   if (currentPage > NUMB_PAGE_IN_MENU) {
     listMarkup += `
       <button class="pageBtn listNumbPrev" type="button">...</button>
-      `
+      `;
   }
   for (let i = currentPage; i <= currentPage + NUMB_PAGE_IN_MENU - 1; i++) {
     listMarkup += `
       <button class="pageBtn" type="button">${i}</button>
-      `
+      `;
   }
   listMarkup += `
       <button class="pageBtn listNumbNext" type="button">...</button>
-      `
+      `;
 
-  pageNumber.insertAdjacentHTML("beforeend", listMarkup);
+  pageNumber.insertAdjacentHTML('beforeend', listMarkup);
 }
 
 async function loadNextNumberPage() {
@@ -228,7 +248,7 @@ async function toFirstPage() {
   updatePagesNumber(data);
 
   updateSelectedPageNumber();
-};
+}
 async function toLastPage() {
   unsplashApi.endpoint = '/recipes';
   const { data } = await unsplashApi.fetchRecipes();
@@ -239,7 +259,7 @@ async function toLastPage() {
   updatePagesNumber(dataRecipesList);
 
   updateSelectedPageNumber();
-};
+}
 
 function updateSelectedPageNumber() {
   const listElPageBtn = document.querySelectorAll('.pageBtn');
@@ -253,20 +273,3 @@ function updateSelectedPageNumber() {
     }
   }
 }
-
-// add to favorites
-
-// async function addTofavorites (e) {
-//   // const click = e.currentTarget;
-//   // const addToFavoriteBtn = 'favorite-icon';
-//   if (e.target.parentNode.classlist === 'favorite-icon') {
-//     console.log(e.target);
-//     localStorage.setItem("favorites", 'JSON.stringify(data)');
-//   } else {
-//     console.log('false');
-//     console.log(e.target.parentNode, e.target.parentNode.className)
-//     return;
-//   }
-// }
-
-// recipesListEl.addEventListener('click', addTofavorites);

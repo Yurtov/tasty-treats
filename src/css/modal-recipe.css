@@ -59,10 +59,68 @@
 .modal-icon-close {
   stroke: currentColor;
 }
-.recipe-markup {
-}
+
 .modal-recipe-video {
   border-radius: 8px;
+}
+
+.recipe-rating-time {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: 14px;
+  opacity: 50%;
+}
+
+.recipe-rating {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.rating-body {
+  position: relative;
+  font-size: 20px;
+}
+
+.rating-body::before {
+  content: '★★★★★';
+  display: block;
+}
+
+.rating-active {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.rating-active::before {
+  content: '★★★★★';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  color: #eea10c;
+}
+
+.recipe-rating-list {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.recipe-rating-item {
+  flex: 0 0 20%;
+  height: 100%;
+  opacity: 0;
 }
 
 .modal-recipe-title {
@@ -71,13 +129,6 @@
   line-height: 1.33;
   text-transform: uppercase;
   margin-top: 20px;
-}
-
-.recipe-rating-time {
-  display: flex;
-  gap: 16px;
-  margin-top: 14px;
-  opacity: 50%;
 }
 
 .modal-recipe-ingredients {
@@ -167,8 +218,6 @@
     right: 16px;
   }
 
-  .recipe-markup {
-  }
   .modal-recipe-video {
     width: 467px;
     height: 250px;
@@ -212,6 +261,22 @@
     width: 156px;
     height: 45px;
     padding: 14px 28px;
+  }
+
+  .recipe-rating-time {
+    white-space: nowrap;
+    margin: 0;
+
+    align-items: center;
+  }
+
+  .recipe-rating {
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .rating-value {
+    margin-bottom: 1px;
   }
 
   .rating-btn {
